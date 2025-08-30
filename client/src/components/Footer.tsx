@@ -5,7 +5,7 @@ import BookHive from "/BookHive.svg";
 const Footer = () => {
   return (
     <footer className="bg-gray-200 mt-10">
-      <div className="container mx-auto px-6 py-12 grid md:grid-cols-3 gap-10">
+      <div className="container mx-auto px-3 py-12 grid md:grid-cols-3 gap-10">
         {/* Brand Section */}
         <div>
           <h1 className="font-bold text-xl flex items-center gap-2 text-black mb-4">
