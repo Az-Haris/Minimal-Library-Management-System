@@ -1,18 +1,18 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import BookList from "@/components/module/BookList";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 // import BookList from "../features/books/BookList";
 
 export default function BooksPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-1 p-6">
-        <h2 className="text-2xl font-bold mb-4">📚 All Books</h2>
-        {/* <BookList /> */}
-
-        list of books
-      </main>
-      <Footer />
-    </div>
+    <main className="flex-1 p-6">
+      <div className="flex justify-between mb-8">
+        <h2 className="text-2xl font-bold mb-4 text-center">📚 All Books</h2>
+        <Link to={"/books/create-book"}><Button className="bg-blue-500 hover:bg-blue-700">Add Book</Button></Link>
+      </div>
+      <div className="container mx-auto px-3">
+        <BookList />
+      </div>
+    </main>
   );
 }

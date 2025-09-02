@@ -1,4 +1,6 @@
 import Root from "@/layouts/Root";
+import BooksPage from "@/pages/BooksPage";
+import CreateBookPage from "@/pages/CreateBookPage";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
 import { createBrowserRouter } from "react-router";
@@ -18,7 +20,15 @@ const Router = createBrowserRouter([
             index: true,
             // element: <Home/>,
             Component: Home
-        }
+        },
+        {
+            path: "/books",
+            element: <BooksPage/>,
+        },
+        {
+            path: "/books/create-book",
+            element: <CreateBookPage/>,
+        },
     ]
   },
 ]);
