@@ -8,9 +8,12 @@ const Footer = () => {
       <div className="container mx-auto px-3 py-12 grid md:grid-cols-3 gap-10">
         {/* Brand Section */}
         <div>
-          <h1 className="font-bold text-xl flex items-center gap-2 text-black mb-4">
-            <img src={BookHive} className="w-10" alt="BookHive Logo" /> BookHive
-          </h1>
+          <Link to={"/"}>
+            <h1 className="font-bold text-xl flex items-center gap-2 text-black mb-4">
+              <img src={BookHive} className="w-10" alt="BookHive Logo" />{" "}
+              BookHive
+            </h1>
+          </Link>
           <p className="text-gray-700 text-sm leading-relaxed">
             BookHive is a minimal library management system built with React,
             Redux Toolkit Query, and TypeScript. <br />
@@ -28,17 +31,26 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link to="/books" className="hover:text-blue-600 transition-colors">
+              <Link
+                to="/books"
+                className="hover:text-blue-600 transition-colors"
+              >
                 Browse Books
               </Link>
             </li>
             <li>
-              <Link to="/about" className="hover:text-blue-600 transition-colors">
+              <Link
+                to="/about"
+                className="hover:text-blue-600 transition-colors"
+              >
                 About
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-blue-600 transition-colors">
+              <Link
+                to="/contact"
+                className="hover:text-blue-600 transition-colors"
+              >
                 Contact
               </Link>
             </li>
@@ -53,13 +65,22 @@ const Footer = () => {
             channels.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition">
+            <a
+              href="#"
+              className="text-gray-700 hover:text-blue-600 transition"
+            >
               <Facebook />
             </a>
-            <a href="#" className="text-gray-700 hover:text-blue-400 transition">
+            <a
+              href="#"
+              className="text-gray-700 hover:text-blue-400 transition"
+            >
               <Twitter />
             </a>
-            <a href="#" className="text-gray-700 hover:text-blue-700 transition">
+            <a
+              href="#"
+              className="text-gray-700 hover:text-blue-700 transition"
+            >
               <Linkedin />
             </a>
             <a href="#" className="text-gray-700 hover:text-black transition">

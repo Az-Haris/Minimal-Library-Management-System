@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { Button } from "../ui/button";
 
 const Header = () => {
   return (
@@ -13,9 +14,8 @@ const Header = () => {
         </p>
         <Link
           to="/books"
-          className="inline-block bg-blue-600 hover:bg-blue-700 transition-colors duration-300 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg"
         >
-          View All Books
+          <Button className="bg-blue-500 hover:bg-blue-800" size={"lg"}>View All Books</Button>
         </Link>
       </div>
 

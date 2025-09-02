@@ -1,4 +1,5 @@
 import Root from "@/layouts/Root";
+import BookDetailsPage from "@/pages/BookDetailsPage";
 import BooksPage from "@/pages/BooksPage";
 import CreateBookPage from "@/pages/CreateBookPage";
 import Home from "@/pages/Home";
@@ -26,7 +27,11 @@ const Router = createBrowserRouter([
             element: <BooksPage/>,
         },
         {
-            path: "/books/create-book",
+            path: "/books/:id",
+            element: <BookDetailsPage/>,
+        },
+        {
+            path: "/create-book",
             element: <CreateBookPage/>,
         },
     ]

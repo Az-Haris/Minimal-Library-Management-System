@@ -16,7 +16,7 @@ const initialState: InitialState = {
       isbn: "2556334",
       description: "book description here. about 10-15 words. This should be a single paragraph.",
       copies: 1,
-      availability: true,
+      available: true,
     },
     {
       id: "asdgvdwgasdasdgasdfasdf",
@@ -26,7 +26,7 @@ const initialState: InitialState = {
       isbn: "2556334",
       description: "book description here. about 10-15 words. This should be a single paragraph.",
       copies: 1,
-      availability: true,
+      available: false,
     },
     {
       id: "asdgvdwgasdasdgasdfasdf",
@@ -36,7 +36,7 @@ const initialState: InitialState = {
       isbn: "2556334",
       description: "book description here. about 10-15 words. This should be a single paragraph.",
       copies: 1,
-      availability: true,
+      available: true,
     },
     {
       id: "asdgvdwgasdasdgasdfasdf",
@@ -46,7 +46,7 @@ const initialState: InitialState = {
       isbn: "2556334",
       description: "book description here. about 10-15 words. This should be a single paragraph.",
       copies: 1,
-      availability: true,
+      available: true,
     },
     {
       id: "asdgvdwgasdasdgasdfasdf",
@@ -56,7 +56,7 @@ const initialState: InitialState = {
       isbn: "2556334",
       description: "book description here. about 10-15 words. This should be a single paragraph.",
       copies: 1,
-      availability: true,
+      available: true,
     },
     {
       id: "asdgvdwgasdasdgasdfasdf",
@@ -66,7 +66,7 @@ const initialState: InitialState = {
       isbn: "2556334",
       description: "book description here. about 10-15 words. This should be a single paragraph.",
       copies: 1,
-      availability: true,
+      available: true,
     },
   ],
 };

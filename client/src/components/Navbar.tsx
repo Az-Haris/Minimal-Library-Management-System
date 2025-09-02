@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BookHive from "/BookHive.svg";
 import { Button } from "./ui/button";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
@@ -11,9 +11,11 @@ export default function Navbar() {
     <nav className="bg-gray-200">
       <div className="px-3 py-3 flex justify-between items-center container mx-auto">
         {/* Logo */}
-        <h1 className="font-bold text-xl flex items-center gap-2 text-black">
-          <img src={BookHive} className="w-10" alt="BookHive Logo" /> BookHive
-        </h1>
+        <Link to={"/"}>
+          <h1 className="font-bold text-xl flex items-center gap-2 text-black">
+            <img src={BookHive} className="w-10" alt="BookHive Logo" /> BookHive
+          </h1>
+        </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-2">
