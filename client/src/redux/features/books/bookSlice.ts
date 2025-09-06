@@ -1,6 +1,6 @@
 import type { RootState } from "@/redux/store";
 import type { IBook } from "@/types/book";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 
 interface InitialState {
     books: IBook[];
@@ -9,61 +9,11 @@ interface InitialState {
 const initialState: InitialState = {
   books: [
     {
-      id: "asdgvdwgasdasdgasdfasdf",
-      title: "Book Title",
-      author: "Author",
+      id: "asdgvdwgasasdf",
+      title: "Theory of Computation",
+      author: "Az Haris",
       genre: "SiFi",
-      isbn: "2556334",
-      description: "book description here. about 10-15 words. This should be a single paragraph.",
-      copies: 1,
-      available: true,
-    },
-    {
-      id: "asdgvdwgasdasdgasdfasdf",
-      title: "Book Title",
-      author: "Author",
-      genre: "SiFi",
-      isbn: "2556334",
-      description: "book description here. about 10-15 words. This should be a single paragraph.",
-      copies: 1,
-      available: false,
-    },
-    {
-      id: "asdgvdwgasdasdgasdfasdf",
-      title: "Book Title",
-      author: "Author",
-      genre: "SiFi",
-      isbn: "2556334",
-      description: "book description here. about 10-15 words. This should be a single paragraph.",
-      copies: 1,
-      available: true,
-    },
-    {
-      id: "asdgvdwgasdasdgasdfasdf",
-      title: "Book Title",
-      author: "Author",
-      genre: "SiFi",
-      isbn: "2556334",
-      description: "book description here. about 10-15 words. This should be a single paragraph.",
-      copies: 1,
-      available: true,
-    },
-    {
-      id: "asdgvdwgasdasdgasdfasdf",
-      title: "Book Title",
-      author: "Author",
-      genre: "SiFi",
-      isbn: "2556334",
-      description: "book description here. about 10-15 words. This should be a single paragraph.",
-      copies: 1,
-      available: true,
-    },
-    {
-      id: "asdgvdwgasdasdgasdfasdf",
-      title: "Book Title",
-      author: "Author",
-      genre: "SiFi",
-      isbn: "2556334",
+      isbn: 2556334,
       description: "book description here. about 10-15 words. This should be a single paragraph.",
       copies: 1,
       available: true,
@@ -71,14 +21,34 @@ const initialState: InitialState = {
   ],
 };
 
+type DraftBook = Pick<IBook, "title" | "author" | "available" | "copies" | "description" | "genre" | "isbn">
+
+const createDraftBook = (bookData: DraftBook): IBook => {
+  return { id: nanoid(), ...bookData}
+}
+
 export const bookSlice = createSlice({
   name: "books",
   initialState,
-  reducers: {},
+  reducers: {
+    createBook : (state, action: PayloadAction<DraftBook>) => {
+      const bookData = createDraftBook(action.payload)
+      state.books.push(bookData)
+    }, 
+    deleteBook: (state, action: PayloadAction<string>)=>{
+      state.books = state.books.filter((book)=> book.id !== action.payload)
+    }
+  },
 });
 
 export const selectBooks = (state: RootState) => {
   return state.book.books
 }
 
+export const getSingleBook = (state: RootState, id: string) => {
+  return state.book.books.find((book)=> book.id === id)
+}
+
+
+export const {createBook, deleteBook} = bookSlice.actions;
 export default bookSlice.reducer;

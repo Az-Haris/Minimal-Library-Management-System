@@ -8,6 +8,8 @@ const Header = () => {
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
           📚 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent drop-shadow-lg">Welcome to Minimal Library System</span>
         </h1>
+
+
         <p className="text-gray-700 mb-8 text-lg md:text-xl leading-relaxed">
           Manage your library with ease — add, edit, borrow, and track books
           with a clean and minimal interface.

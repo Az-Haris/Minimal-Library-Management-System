@@ -18,12 +18,14 @@ const BookCard = () => {
       <h3 className="text-center font-bold text-3xl mb-10">Featured Books</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {books.map((book) => (
-          <Link key={book.id} to={`/books/${book.id}`}>
-            <Card className="w-full">
+            <Card key={book.id} className="w-full">
               <CardHeader>
+                <Link to={`/books/${book.id}`}>
+                
                 <CardTitle>
                   {book.title} ({book.genre})
                 </CardTitle>
+                </Link>
                 <CardDescription>{book.description}</CardDescription>
               </CardHeader>
               <CardContent>
@@ -40,14 +42,13 @@ const BookCard = () => {
                     View Details
                   </Button>
                 </Link>
-                <Link to={"/borrow"} className="w-full">
+                <Link to={`/borrow/id`} className="w-full">
                   <Button type="submit" className="w-full" variant={"outline"}>
                     Borrow This Book
                   </Button>
                 </Link>
               </CardFooter>
             </Card>
-          </Link>
         ))}
       </div>
     </div>

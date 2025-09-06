@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
 export default function NotFound() {
@@ -11,9 +12,8 @@ export default function NotFound() {
       </p>
       <Link
         to="/"
-        className="bg-blue-600 hover:bg-blue-700 transition-all duration-300 text-white font-semibold px-8 py-3 rounded-2xl shadow-lg"
       >
-        Go Back Home
+        <Button size={"lg"} className="bg-blue-600 hover:bg-blue-700 transition-all duration-300 text-white font-semibold">Go Back Home</Button>
       </Link>
 
       {/* Decorative element */}

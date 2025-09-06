@@ -1,6 +1,6 @@
 import BookCard from "@/components/module/BookCard";
 import Header from "@/components/module/Header";
-import ScrollToTop from "@/components/ScrollToTop";
+import ScrollToTop from "@/utils/ScrollToTop";
 
 const Home = () => {
   return (

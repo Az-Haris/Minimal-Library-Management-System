@@ -19,38 +19,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
-import { useAppDispatch } from "@/redux/hooks";
-import { createBook } from "@/redux/features/books/bookSlice";
-import type { IBook } from "@/types/book";
+import { useForm } from "react-hook-form";
 
-const CreateBookPage = () => {
-  const dispatch = useAppDispatch();
-
+const EditBookPage = () => {
   const form = useForm({
     defaultValues: {
       title: "",
       genre: "",
-      isbn: 0,
+      isbn: "",
       author: "",
       description: "",
-      copies: 1,
+      copies: "",
       available: true,
     },
   });
-
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-    dispatch(createBook(data as IBook));
-  };
-
   return (
     <div className="container mx-auto px-3 mt-8">
       <ScrollToTop />
       <div className="max-w-md mx-auto">
-        <h1 className="text-center font-black text-2xl mb-5">Create Book</h1>
+        <h1 className="text-center font-black text-2xl mb-5">Edit Book</h1>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit((data) => {
+              console.log(data);
+            })}
+            className="space-y-4"
+          >
             <FormField
               control={form.control}
               name="title"
@@ -147,12 +141,7 @@ const CreateBookPage = () => {
                   <FormItem className="w-full">
                     <FormLabel>Copies</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        required
-                        placeholder="e.g. 12"
-                        {...field}
-                      />
+                      <Input required placeholder="e.g. 12" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -166,11 +155,7 @@ const CreateBookPage = () => {
                   <FormItem className="w-full">
                     <FormLabel>Availability</FormLabel>
                     <FormControl>
-                      <Select
-                        onValueChange={(value) =>
-                          field.onChange(value === "true")
-                        }
-                      >
+                      <Select onValueChange={field.onChange}>
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select availability" />
                         </SelectTrigger>
@@ -208,7 +193,7 @@ const CreateBookPage = () => {
             />
 
             <Button type="submit" className="w-full">
-              Create
+              Update
             </Button>
           </form>
         </Form>
@@ -217,4 +202,4 @@ const CreateBookPage = () => {
   );
 };
 
-export default CreateBookPage;
+export default EditBookPage;

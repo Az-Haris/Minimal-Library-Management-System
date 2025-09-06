@@ -41,17 +41,6 @@ export default function Navbar() {
             )}
           </NavLink>
 
-          <NavLink to="/borrow">
-            {({ isActive }) => (
-              <Button
-                className="cursor-pointer"
-                variant={isActive ? "secondary" : "ghost"}
-              >
-                Borrow
-              </Button>
-            )}
-          </NavLink>
-
           <NavLink to="/borrow-summary">
             {({ isActive }) => (
               <Button
