@@ -20,17 +20,23 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
+import { useAppSelector } from "@/redux/hooks";
+import { getSingleBook } from "@/redux/features/books/bookSlice";
 
 const EditBookPage = () => {
+  const {id} = useParams<{id: string}>()
+  const book = useAppSelector((state) => getSingleBook(state, id!))
+
   const form = useForm({
     defaultValues: {
-      title: "",
-      genre: "",
-      isbn: "",
-      author: "",
-      description: "",
-      copies: "",
-      available: true,
+      title: book?.title,
+      genre: book?.genre,
+      isbn: book?.isbn,
+      author: book?.author,
+      description: book?.description,
+      copies: book?.copies,
+      available: book?.available,
     },
   });
   return (

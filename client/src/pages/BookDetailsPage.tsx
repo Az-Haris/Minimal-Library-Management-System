@@ -22,12 +22,19 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { deleteBook, getSingleBook } from "@/redux/features/books/bookSlice";
+import { useGetSingleBookQuery } from "@/api/baseApi";
+import Loading from "@/utils/Loading";
 
 export default function BookDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const book = useAppSelector((state) => getSingleBook(state, id!));
   const dispatch = useAppDispatch()
+
+  const {data, isLoading} = useGetSingleBookQuery(id)
   const navigate = useNavigate()
+
+  
+  if(isLoading) return <Loading/>
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -43,31 +50,31 @@ export default function BookDetailsPage() {
                 className="rounded-xl shadow-md"
               />
               <h2 className="text-2xl font-black text-white uppercase max-w-32 absolute left-8 bottom-22 leading-7">
-                {book?.title}
+                {data?.data?.title}
               </h2>
             </div>
           </div>
 
           {/* Book Info */}
           <div className="md:col-span-2 p-4 space-y-4">
-            <h1 className="text-3xl font-bold text-gray-800">{book?.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-800">{data?.data?.title}</h1>
             <p className="text-lg text-gray-600">
-              <span className="font-semibold">Author:</span> {book?.author}
+              <span className="font-semibold">Author:</span> {data?.data?.author}
             </p>
             <p className="text-lg text-gray-600">
-              <span className="font-semibold">Genre:</span> {book?.genre}
+              <span className="font-semibold">Genre:</span> {data?.data?.genre}
             </p>
             <p className="text-lg text-gray-600">
               <span className="font-semibold">Available Copies:</span>{" "}
-              {book?.copies}
+              {data?.data?.copies}
             </p>
 
             {/* Description */}
-            <p className="text-gray-700 leading-relaxed">{book?.description}</p>
+            <p className="text-gray-700 leading-relaxed">{data?.data?.description}</p>
 
             {/* Action Buttons */}
             <div className="flex gap-3 mt-4">
-              <Link to={`/borrow/id`}>
+              <Link to={`/borrow/${data?.data?._id}`}>
                 <Button
                   size={"lg"}
                   className="hover:bg-primary hover:text-white"
@@ -78,7 +85,7 @@ export default function BookDetailsPage() {
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Link to={`/edit-book/id`}>
+                  <Link to={`/edit-book/${data?.data?._id}`}>
                     <Button
                       size={"lg"}
                       variant={"outline"}

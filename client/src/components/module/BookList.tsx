@@ -24,14 +24,21 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { Link } from "react-router";
+import { useGetBooksQuery } from "@/api/baseApi";
+import Loading from "@/utils/Loading";
 
 const BookList = () => {
   const books = useAppSelector(selectBooks);
   const dispatch = useAppDispatch()
 
+  const {data, isLoading} = useGetBooksQuery(undefined)
+
+
   const handleDelete = (id: string) =>{
     dispatch(deleteBook(id))
   }
+
+  if(isLoading) return <Loading/>
   return (
     <>
       <Table>
@@ -48,11 +55,11 @@ const BookList = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {books.map((book) => (
-            <TableRow key={book.id}>
+          {data?.data.map((book) => (
+            <TableRow key={book._id}>
               <TableCell className="font-medium">{book.genre}</TableCell>
               <TableCell>
-                <Link to={`/books/${book.id}`}>{book.title}</Link>
+                <Link to={`/books/${book._id}`}>{book.title}</Link>
               </TableCell>
               <TableCell>{book.isbn}</TableCell>
               <TableCell>{book.author}</TableCell>
@@ -67,7 +74,7 @@ const BookList = () => {
                 </span>
               </TableCell>
               <TableCell className="flex justify-end gap-2">
-                <Link to={`/borrow/${book.id}`}>
+                <Link to={`/borrow/${book._id}`}>
                   <Button
                     size={"sm"}
                     variant={"outline"}
@@ -79,7 +86,7 @@ const BookList = () => {
 
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Link to={`/edit-book/id`}>
+                    <Link to={`/edit-book/${book._id}`}>
                       <Button
                         size={"sm"}
                         variant={"outline"}
@@ -116,7 +123,7 @@ const BookList = () => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={()=>handleDelete(book.id)} className="bg-red-500">
+                      <AlertDialogAction onClick={()=>handleDelete(book._id)} className="bg-red-500">
                         Delete
                       </AlertDialogAction>
                     </AlertDialogFooter>

@@ -37,6 +37,12 @@ export const bookSlice = createSlice({
     }, 
     deleteBook: (state, action: PayloadAction<string>)=>{
       state.books = state.books.filter((book)=> book.id !== action.payload)
+    },
+    editBook: (state, action: PayloadAction<IBook>) =>{
+      const index = state.books.findIndex((book) => book.id === action.payload.id);
+      if(index !== -1){
+        state.books[index] = action.payload;
+      }
     }
   },
 });
