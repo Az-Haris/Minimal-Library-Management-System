@@ -20,18 +20,16 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
-import { useAppDispatch } from "@/redux/hooks";
-import { createBook } from "@/redux/features/books/bookSlice";
-import type { IBook } from "@/types/book";
+import { useCreateBookMutation } from "@/api/baseApi";
+import { Loader } from "lucide-react";
 
 const CreateBookPage = () => {
-  const dispatch = useAppDispatch();
 
   const form = useForm({
     defaultValues: {
       title: "",
       genre: "",
-      isbn: 0,
+      isbn: "",
       author: "",
       description: "",
       copies: 1,
@@ -39,9 +37,13 @@ const CreateBookPage = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-    dispatch(createBook(data as IBook));
+
+  const [createBook, {isLoading}] = useCreateBookMutation();
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    
+    const res = await createBook(data).unwrap()
+    console.log(res)
   };
 
   return (
@@ -152,6 +154,7 @@ const CreateBookPage = () => {
                         required
                         placeholder="e.g. 12"
                         {...field}
+                        onChange={(e)=> field.onChange(e.target.valueAsNumber)}
                       />
                     </FormControl>
                     <FormMessage />
@@ -194,7 +197,7 @@ const CreateBookPage = () => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Author</FormLabel>
+                  <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
                       required
@@ -208,7 +211,7 @@ const CreateBookPage = () => {
             />
 
             <Button type="submit" className="w-full">
-              Create
+              {isLoading ? <Loader/> : "Create"}
             </Button>
           </form>
         </Form>

@@ -7,8 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { deleteBook, selectBooks } from "@/redux/features/books/bookSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Button } from "../ui/button";
 import { SquarePen, Trash2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
@@ -24,18 +22,26 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { Link } from "react-router";
-import { useGetBooksQuery } from "@/api/baseApi";
+import { useDeleteBookMutation, useGetBooksQuery } from "@/api/baseApi";
 import Loading from "@/utils/Loading";
+import type { IBook } from "@/types/book";
 
 const BookList = () => {
-  const books = useAppSelector(selectBooks);
-  const dispatch = useAppDispatch()
 
-  const {data, isLoading} = useGetBooksQuery(undefined)
+  const {data, isLoading} = useGetBooksQuery(undefined, {
+    refetchOnReconnect: true
+  })
+
+  const [deleteBook] = useDeleteBookMutation();
 
 
-  const handleDelete = (id: string) =>{
-    dispatch(deleteBook(id))
+  const handleDelete = async(id: string) =>{
+    try {
+      await deleteBook(id).unwrap();
+      console.log("Book deleted successfully!")
+    } catch (error) {
+      console.error("Failed to delete book:", error)
+    }
   }
 
   if(isLoading) return <Loading/>
@@ -55,7 +61,7 @@ const BookList = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.data.map((book) => (
+          {data?.data.map((book: IBook) => (
             <TableRow key={book._id}>
               <TableCell className="font-medium">{book.genre}</TableCell>
               <TableCell>

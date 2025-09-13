@@ -20,18 +20,27 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { deleteBook, getSingleBook } from "@/redux/features/books/bookSlice";
-import { useGetSingleBookQuery } from "@/api/baseApi";
+import { useDeleteBookMutation, useGetSingleBookQuery } from "@/api/baseApi";
 import Loading from "@/utils/Loading";
 
 export default function BookDetailsPage() {
   const { id } = useParams<{ id: string }>();
-  const book = useAppSelector((state) => getSingleBook(state, id!));
-  const dispatch = useAppDispatch()
 
   const {data, isLoading} = useGetSingleBookQuery(id)
   const navigate = useNavigate()
+
+  const [deleteBook] = useDeleteBookMutation();
+  
+  
+    const handleDelete = async(id: string) =>{
+      try {
+        await deleteBook(id).unwrap();
+        navigate("/books")
+        console.log("Book deleted successfully!")
+      } catch (error) {
+        console.error("Failed to delete book:", error)
+      }
+    }
 
   
   if(isLoading) return <Loading/>
@@ -122,9 +131,8 @@ export default function BookDetailsPage() {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={()=>{dispatch(deleteBook(id))
-                        navigate("/books")
-                    }} className="bg-red-500">
+                    <AlertDialogAction onClick={()=>handleDelete(data?.data?._id)}
+                     className="bg-red-500">
                       Delete
                     </AlertDialogAction>
                   </AlertDialogFooter>
