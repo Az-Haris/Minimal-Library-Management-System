@@ -21,12 +21,15 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
-import { useAppSelector } from "@/redux/hooks";
-import { getSingleBook } from "@/redux/features/books/bookSlice";
+import { useGetSingleBookQuery } from "@/api/baseApi";
+import Loading from "@/utils/Loading";
 
 const EditBookPage = () => {
-  const {id} = useParams<{id: string}>()
-  const book = useAppSelector((state) => getSingleBook(state, id!))
+  const { id } = useParams<{ id: string }>();
+  const { data, isLoading } = useGetSingleBookQuery(id);
+  const book = data?.data;
+
+  console.log(book);
 
   const form = useForm({
     defaultValues: {
@@ -39,6 +42,8 @@ const EditBookPage = () => {
       available: book?.available,
     },
   });
+
+  if (isLoading) return <Loading />;
   return (
     <div className="container mx-auto px-3 mt-8">
       <ScrollToTop />
@@ -161,7 +166,12 @@ const EditBookPage = () => {
                   <FormItem className="w-full">
                     <FormLabel>Availability</FormLabel>
                     <FormControl>
-                      <Select onValueChange={field.onChange}>
+                      <Select
+                        onValueChange={(value) =>
+                          field.onChange(value === "true")
+                        }
+                        defaultValue={field.value?.toString()}
+                      >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select availability" />
                         </SelectTrigger>
