@@ -36,7 +36,11 @@ export const baseApi = createApi({
             }),
             invalidatesTags: ["book"]
         }),
+        getBorrowSummary: builder.query({
+            query: () => '/borrow',
+            providesTags: ["book"]
+        })
     })
 })
 
-export const { useGetBooksQuery, useGetSingleBookQuery, useCreateBookMutation, useDeleteBookMutation, useBorrowBookMutation} = baseApi
+export const { useGetBooksQuery, useGetSingleBookQuery, useCreateBookMutation, useDeleteBookMutation, useBorrowBookMutation, useGetBorrowSummaryQuery} = baseApi

@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Calendar, Loader, Minus, Plus } from "lucide-react";
 import ScrollToTop from "@/utils/ScrollToTop";
 import { useBorrowBookMutation, useGetSingleBookQuery } from "@/api/baseApi";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Loading from "@/utils/Loading";
 import {
   Form,
@@ -22,6 +22,7 @@ export default function BorrowBook() {
   const { data, isLoading } = useGetSingleBookQuery(id);
   const book = data?.data;
   const [borrowBook, {isLoading: borrowingBook}] = useBorrowBookMutation()
+  const navigate = useNavigate()
 
   const [quantity, setQuantity] = useState(1);
 
@@ -32,13 +33,14 @@ export default function BorrowBook() {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (values) => {
+  const onSubmit: SubmitHandler<FieldValues> = async(values) => {
     const borrowBookData = {
       book: id,
       quantity: values.quantity,
       dueDate: new Date(values.dueDate)
     }
-    borrowBook(borrowBookData)
+    await borrowBook(borrowBookData)
+    navigate("/borrow-summary")
   };
 
   if (isLoading) return <Loading />;
