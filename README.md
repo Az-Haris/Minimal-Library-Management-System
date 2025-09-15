@@ -30,6 +30,7 @@ It allows users to manage books, borrow/return books, and track availability wit
 
 ## 📂 Project Structure
 
+```bash
 📦 book-borrowing-system
 ├── 📁 backend
 │   ├── 📁 models          # Mongoose models (Book, Borrow, User)
@@ -46,6 +47,7 @@ It allows users to manage books, borrow/return books, and track availability wit
 │   │   ├── main.tsx       # React entry point
 │
 └── README.md
+```
 
 ## ⚡ API Endpoints
 ### Books API
@@ -81,25 +83,25 @@ Frontend runs on: http://localhost:3000
 
 ## 🧪 Usage
 
-Go to Books Page → Add or manage books.
-Click Borrow → Select due date & quantity.
-Borrow summary shows total borrowed per book.
-If copies run out → Borrow button gets disabled.
+- Go to Books Page → Add or manage books.
+- Click Borrow → Select due date & quantity.
+- Borrow summary shows total borrowed per book.
+- If copies run out → Borrow button gets disabled.
 
 ## 🚧 Roadmap
 
-✅ Borrow summary (aggregation)
-⏳ User authentication (borrow by user)
-⏳ Return book flow
-⏳ Admin dashboard with analytics
+- ✅ Borrow summary (aggregation)
+- ⏳ User authentication (borrow by user)
+- ⏳ Return book flow
+- ⏳ Admin dashboard with analytics
 
 ## 🤝 Contributing
 
-Contributions are welcome!
-Fork this repo
-Create a feature branch (git checkout -b feature-name)
-Commit changes (git commit -m "Added feature")
-Push & open a PR
+- Contributions are welcome!
+- Fork this repo
+- Create a feature branch (git checkout -b feature-name)
+- Commit changes (git commit -m "Added feature")
+- Push & open a PR
 
 ## 📜 License
 
