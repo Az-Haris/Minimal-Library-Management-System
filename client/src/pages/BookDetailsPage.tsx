@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useDeleteBookMutation, useGetSingleBookQuery } from "@/api/baseApi";
 import Loading from "@/utils/Loading";
+import { toast } from "sonner";
 
 export default function BookDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -33,14 +34,15 @@ export default function BookDetailsPage() {
   
   
     const handleDelete = async(id: string) =>{
-      try {
-        await deleteBook(id).unwrap();
-        navigate("/books")
-        console.log("Book deleted successfully!")
-      } catch (error) {
-        console.error("Failed to delete book:", error)
-      }
+    try {
+      await deleteBook(id).unwrap();
+      toast("Book deleted successfully!")
+      navigate("/books")
+    } catch (error) {
+      toast("Failed to delete book")
+      console.error("Failed to delete book:", error)
     }
+  }
 
   
   if(isLoading) return <Loading/>
@@ -94,7 +96,7 @@ export default function BookDetailsPage() {
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Link to={`/edit-book/${data?.data?._id}`}>
+                  <Link to={`/edit-book/${data?.data?._id}`} state={{book: data?.data}}>
                     <Button
                       size={"lg"}
                       variant={"outline"}

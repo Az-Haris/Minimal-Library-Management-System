@@ -19,17 +19,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useForm } from "react-hook-form";
-import { useParams } from "react-router";
-import { useGetSingleBookQuery } from "@/api/baseApi";
-import Loading from "@/utils/Loading";
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { useLocation, useNavigate, useParams } from "react-router";
+import { useUpdateBookMutation } from "@/api/baseApi";
+import { Loader } from "lucide-react";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 const EditBookPage = () => {
+  const location = useLocation()
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { data, isLoading } = useGetSingleBookQuery(id);
-  const book = data?.data;
-
-  console.log(book);
+  const book = location.state?.book;
+  const [updateBook, { isLoading: updatingBook }] = useUpdateBookMutation();
 
   const form = useForm({
     defaultValues: {
@@ -43,7 +45,27 @@ const EditBookPage = () => {
     },
   });
 
-  if (isLoading) return <Loading />;
+  const handleUpdateBook: SubmitHandler<FieldValues> = async (bookData) => {
+    try {
+      const res = await updateBook({ id, bookData });
+
+      if (res.data.success) {
+        toast(res.data.message);
+        navigate("/books");
+      }
+    } catch (err) {
+      toast("Error editing book. Please try again.");
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (!book) {
+      navigate("/books"); // navigate back if no book data is passed
+    }
+  }, [book, navigate]);
+
+
   return (
     <div className="container mx-auto px-3 mt-8">
       <ScrollToTop />
@@ -51,9 +73,7 @@ const EditBookPage = () => {
         <h1 className="text-center font-black text-2xl mb-5">Edit Book</h1>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit((data) => {
-              console.log(data);
-            })}
+            onSubmit={form.handleSubmit(handleUpdateBook)}
             className="space-y-4"
           >
             <FormField
@@ -209,7 +229,7 @@ const EditBookPage = () => {
             />
 
             <Button type="submit" className="w-full">
-              Update
+              {updatingBook ? <Loader className="animate-spin" /> : "Update"}
             </Button>
           </form>
         </Form>

@@ -25,6 +25,7 @@ import { Link } from "react-router";
 import { useDeleteBookMutation, useGetBooksQuery } from "@/api/baseApi";
 import Loading from "@/utils/Loading";
 import type { IBook } from "@/types/book";
+import { toast } from "sonner";
 
 const BookList = () => {
 
@@ -38,8 +39,9 @@ const BookList = () => {
   const handleDelete = async(id: string) =>{
     try {
       await deleteBook(id).unwrap();
-      console.log("Book deleted successfully!")
+      toast("Book deleted successfully!")
     } catch (error) {
+      toast("Failed to delete book")
       console.error("Failed to delete book:", error)
     }
   }
@@ -92,7 +94,7 @@ const BookList = () => {
 
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Link to={`/edit-book/${book._id}`}>
+                    <Link to={`/edit-book/${book._id}`} state={{book: book}}>
                       <Button
                         size={"sm"}
                         variant={"outline"}
