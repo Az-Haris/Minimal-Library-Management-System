@@ -16,13 +16,14 @@ import {
 } from "@/components/ui/form";
 import { useForm, type SubmitHandler, type FieldValues } from "react-hook-form";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function BorrowBook() {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleBookQuery(id);
   const book = data?.data;
-  const [borrowBook, {isLoading: borrowingBook}] = useBorrowBookMutation()
-  const navigate = useNavigate()
+  const [borrowBook, { isLoading: borrowingBook }] = useBorrowBookMutation();
+  const navigate = useNavigate();
 
   const [quantity, setQuantity] = useState(1);
 
@@ -33,14 +34,26 @@ export default function BorrowBook() {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = async(values) => {
-    const borrowBookData = {
+  const onSubmit: SubmitHandler<FieldValues> = async (values) => {
+    try{
+const borrowBookData = {
       book: id,
       quantity: values.quantity,
-      dueDate: new Date(values.dueDate)
+      dueDate: new Date(values.dueDate),
+    };
+    const res = await borrowBook(borrowBookData);
+    
+    if(res?.data.success) {
+      toast(res.data.message)
+    navigate("/borrow-summary");
+    } else{
+      toast("Error borrowing book. Please try again.")
     }
-    await borrowBook(borrowBookData)
-    navigate("/borrow-summary")
+    } catch(err) {
+      toast("Error borrowing book. Please try again.")
+      console.log(err)
+    }
+    
   };
 
   if (isLoading) return <Loading />;
@@ -124,10 +137,15 @@ export default function BorrowBook() {
                             variant="outline"
                             size="icon"
                             onClick={() => {
-                              const newQty = quantity + 1;
+                              const newQty = Math.min(
+                                quantity + 1,
+                                book.copies,
+                              ); // limit by available copies
                               setQuantity(newQty);
                               field.onChange(newQty);
                             }}
+                            disabled={quantity >= book.copies}
+                            
                           >
                             <Plus className="w-4 h-4" />
                           </Button>
@@ -145,7 +163,7 @@ export default function BorrowBook() {
                   Cancel
                 </Button>
                 <Button type="submit" className="shadow-md">
-                  {borrowingBook ? <Loader/> : "Confirm Borrow"}
+                  {borrowingBook ? <Loader /> : "Confirm Borrow"}
                 </Button>
               </div>
             </form>

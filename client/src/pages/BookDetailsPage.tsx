@@ -85,14 +85,15 @@ export default function BookDetailsPage() {
 
             {/* Action Buttons */}
             <div className="flex gap-3 mt-4">
-              <Link to={`/borrow/${data?.data?._id}`}>
                 <Button
                   size={"lg"}
                   className="hover:bg-primary hover:text-white"
+                  disabled={!data?.data?.available}
                 >
-                  Borrow
-                </Button>
+              <Link to={`/borrow/${data?.data?._id}`}>
+                  {data?.data?.available? "Borrow" : "Not Available"}
               </Link>
+                </Button>
 
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -114,7 +115,7 @@ export default function BookDetailsPage() {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button
-                    size={"sm"}
+                    size={"lg"}
                     variant={"outline"}
                     className="text-red-500 hover:bg-red-500 hover:text-white"
                   >

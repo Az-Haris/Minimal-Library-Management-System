@@ -22,8 +22,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { useCreateBookMutation } from "@/api/baseApi";
 import { Loader } from "lucide-react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 const CreateBookPage = () => {
+  const navigate = useNavigate()
 
   const form = useForm({
     defaultValues: {
@@ -37,13 +40,21 @@ const CreateBookPage = () => {
     },
   });
 
-
-  const [createBook, {isLoading}] = useCreateBookMutation();
+  const [createBook, { isLoading }] = useCreateBookMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    
-    const res = await createBook(data).unwrap()
-    console.log(res)
+    try {
+      const res = await createBook(data).unwrap();
+      if (res.success) {
+        toast(res.message);
+        navigate("/books")
+      } else {
+        toast("Error creating book. Please try again.");
+      }
+    } catch (error) {
+      toast("Error creating book. Please try again.");
+      console.log(error)
+    }
   };
 
   return (
@@ -154,7 +165,7 @@ const CreateBookPage = () => {
                         required
                         placeholder="e.g. 12"
                         {...field}
-                        onChange={(e)=> field.onChange(e.target.valueAsNumber)}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
                       />
                     </FormControl>
                     <FormMessage />
@@ -211,7 +222,7 @@ const CreateBookPage = () => {
             />
 
             <Button type="submit" className="w-full">
-              {isLoading ? <Loader/> : "Create"}
+              {isLoading ? <Loader /> : "Create"}
             </Button>
           </form>
         </Form>

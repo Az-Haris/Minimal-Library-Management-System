@@ -82,15 +82,16 @@ const BookList = () => {
                 </span>
               </TableCell>
               <TableCell className="flex justify-end gap-2">
-                <Link to={`/borrow/${book._id}`}>
                   <Button
                     size={"sm"}
                     variant={"outline"}
                     className="hover:bg-primary hover:text-white"
+                    disabled={!book.available}
                   >
+                <Link to={`/borrow/${book._id}`}>
                     Borrow
-                  </Button>
                 </Link>
+                  </Button>
 
                 <Tooltip>
                   <TooltipTrigger asChild>

@@ -41,6 +41,17 @@ export default function Navbar() {
             )}
           </NavLink>
 
+          <NavLink to="/create-book">
+            {({ isActive }) => (
+              <Button
+                className="cursor-pointer"
+                variant={isActive ? "secondary" : "ghost"}
+              >
+                Add Book
+              </Button>
+            )}
+          </NavLink>
+
           <NavLink to="/borrow-summary">
             {({ isActive }) => (
               <Button
@@ -89,17 +100,17 @@ export default function Navbar() {
             )}
           </NavLink>
 
-          <NavLink to="/borrow">
+          <NavLink to="/create-book">
             {({ isActive }) => (
               <Button
                 className="w-full text-left"
                 variant={isActive ? "secondary" : "ghost"}
-                onClick={() => setIsOpen(false)}
               >
-                Borrow
+                Add Book
               </Button>
             )}
           </NavLink>
+
 
           <NavLink to="/borrow-summary">
             {({ isActive }) => (
