@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { IBorrow } from "@/types/borrow";
 import Loading from "@/utils/Loading";
 
 export default function BorrowSummary() {
@@ -44,8 +45,8 @@ export default function BorrowSummary() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {books.map((book, idx) => (
-                <TableRow key={idx}>
+              {books.map((book: IBorrow) => (
+                <TableRow key={book._id}>
                   <TableCell>{book?.book.title}</TableCell>
                   <TableCell>{book?.book.isbn}</TableCell>
                   <TableCell className="text-center">

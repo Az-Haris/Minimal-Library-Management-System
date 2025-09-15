@@ -21,7 +21,7 @@ const BookCard = () => {
     <div className="w-full container mx-auto px-3 my-28">
       <h3 className="text-center font-bold text-3xl mb-10">Featured Books</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {books.map((book: IBook) => (
+        {books?.map((book: IBook) => (
           <Card key={book._id} className="w-full">
             <CardHeader>
               <Link to={`/books/${book._id}`}>
